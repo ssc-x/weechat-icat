@@ -229,6 +229,8 @@ def icat_cb(data: str, buffer: str, args: str) -> int:
 
 def register_commands():
     command_icat_description = (
+        "             -auth: Bearer token and cookies to add to HTTPS requests, in the "
+        "form of <bearer-token>:<cookie-key>=<cookie-value>;<cookie-key>=<cookie-value>\n"
         "          -columns: number of columns to use to display the image\n"
         "             -rows: number of rows to use to display the image\n"
         "-print_immediately: print the image lines immediately (the lines will "
@@ -244,7 +246,7 @@ def register_commands():
     weechat.hook_command(
         "icat",
         "display an image in the chat",
-        "[-columns <columns>] [-rows <rows>] [-print_immediately] [-quiet] <filename> || -restore [-quiet]",
+        "[-auth <data>] [-columns <columns>] [-rows <rows>] [-print_immediately] [-quiet] <filename> || -restore [-quiet]",
         command_icat_description,
         "-columns|-rows|-print_immediately|-quiet|%* || -restore|-quiet|%*",
         get_callback_name(icat_cb),
