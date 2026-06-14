@@ -212,9 +212,13 @@ def icat_cb(data: str, buffer: str, args: str) -> int:
             return weechat.WEECHAT_RC_ERROR
 
         path_or_url = weechat.string_eval_path_home(pos_args, {}, {}, {})
-        if path_or_url.startswith(("http://", "https://")):
+        if path_or_url.startswith(("https://")):
             download_and_create_image(
                 buffer, path_or_url, columns_int, rows_int, bool(print_immediately), options.get("auth")
+            )
+        elif path_or_url.startswith(("http://")):
+            download_and_create_image(
+                buffer, path_or_url, columns_int, rows_int, bool(print_immediately), None
             )
         elif os.path.isfile(path_or_url):
             create_image(
