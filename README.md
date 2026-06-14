@@ -14,5 +14,5 @@ Requires PIL (Python Imaging Library) or [Pillow](https://pillow.readthedocs.io/
 Add the following trigger, adjusting anything as necessary:
 
 ```
-/trigger addreplace icat_slack print "" "${tg_message} =~ https://files\.slack\.com/" ",.*(https://files\.slack\.com/[^ ]*).*,${re:1}," "/icat -auth ${plugins.var.python.slack.slack_api_token} -print_immediately -columns 80 -rows 20 -quiet ${tg_message}"
+/trigger addreplace icat_slack print "" "${tg_message} =~ https://files\.slack\.com/[^ ]*\.(png|jpg|jpeg|gif|webp)" ",.*(https://files\.slack\.com/[^ ]*).*,${re:1}," "/icat -auth ${plugins.var.python.slack.slack_api_token} -print_immediately -columns 80 -rows 20 -quiet ${tg_message}"
 ```
