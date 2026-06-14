@@ -120,6 +120,7 @@ def download_and_create_image(
     columns: Optional[int],
     rows: Optional[int],
     print_immediately: bool,
+    auth: str,
 ):
     downloaded_path = downloaded_images.get(url)
     if downloaded_path and os.path.isfile(downloaded_path):
@@ -143,7 +144,7 @@ def download_and_create_image(
             bool(print_immediately),
         )
         callback_data = b64encode(pickle.dumps(image_downloaded_data)).decode("ascii")
-        download_image(url, save_path, image_downloaded_cb, callback_data)
+        download_image(url, save_path, auth, image_downloaded_cb, callback_data)
 
 
 def create_image(
@@ -179,6 +180,7 @@ def icat_cb(data: str, buffer: str, args: str) -> int:
             "print_immediately": False,
             "restore": False,
             "quiet": False,
+            "auth": True,
         },
     )
     shared.print_errors = not options.get("quiet")
@@ -212,7 +214,7 @@ def icat_cb(data: str, buffer: str, args: str) -> int:
         path_or_url = weechat.string_eval_path_home(pos_args, {}, {}, {})
         if path_or_url.startswith(("http://", "https://")):
             download_and_create_image(
-                buffer, path_or_url, columns_int, rows_int, bool(print_immediately)
+                buffer, path_or_url, columns_int, rows_int, bool(print_immediately), options.get("auth")
             )
         elif os.path.isfile(path_or_url):
             create_image(

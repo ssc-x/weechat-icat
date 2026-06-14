@@ -14,5 +14,5 @@ contents="$(cat weechat_icat/util.py weechat_icat/!(util).py icat.py | \
   echo
   echo "$contents" | grep '^from __future__' | sort -u
   echo "$contents" | grep -v '^from __future__' | grep -E '^(import|from)' | sort -u
-  echo "$contents" | grep -Ev '^(import|from)' | sed 's/^\( \+\)\(import\|from\).*/\1pass/'
+  echo "$contents" | grep -Ev '^(import|from)'
 ) > dist/icat.py
